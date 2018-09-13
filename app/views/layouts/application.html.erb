@@ -7,6 +7,7 @@
   <%= action_cable_meta_tag %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <script type="text/javascript" src="../../../assets/javascripts/gif.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -17,7 +18,7 @@
             <nav class="navbar navbar-default">
               <div class="container-fluid">
                 <div class="navbar-header">
-                <%= link_to "Flat_Chat", root_path, class:"navbar-brand" %>
+                <%= link_to "Feel Everyday", root_path, class:"navbar-brand" %>
               </div>
           <ul class="nav navbar-nav navbar-right">
           <% if signed_in? %>
@@ -37,17 +38,15 @@
  </div>
  </nav>
  </header>
- <div class="mx-auto" style="width: 850px;">
-   <div style="height:500px;width:800px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+   <div class="mx-auto" style="width: 850px;">
+     <div style="height:500px;width:800px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
 
-<%= yield %>
-</div>
-   </div>
+      <%= yield %>
+      </div>
+    </div>
+
    <div class="new_message">
-
-
    <% if signed_in? %>
-   <h4>New message
 
    <%= form_with url: '#', html: {id: 'new-message'} do |f| %>
      <%= f.label :body %>
@@ -59,8 +58,53 @@
      <%= f.submit %>
    <% end %>
    <% end %>
- </h4>
    </div>
+
+
+    <!-- Trigger/Open The Modal -->
+  <button id="myBtn">Add Gif</button>
+
+<!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="gif-search" class="" action="index.html" method="post">
+        <input id="search-value" type="text" name="" value="" placeholder="Search">
+        <input id="search-button" type="submit" name="" value="Search">
+      </form>
+
+      <div class="container">
+
+      </div>
+      <!-- <p>Some text in the Modal..</p> -->
+    </div>
+
+  </div>
+
+<script>
+  // Get the modal
+  var modal = document.getElementById('myModal');
+  // Get the button that opens the modal
+  var btn = document.getElementById("myBtn");
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  // When the user clicks the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+  }
+</script>
 </div>
 </div>
 </body>

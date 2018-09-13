@@ -1,6 +1,10 @@
 <div class="message">
   <strong><%= message.user.email %></strong> says:
+  <% if message.body.include?("https://") %>
+    <img src="<%= message.body %>">
+  <% else %>
   <%= message.body %>
+  <% end %>
   <br>
   <small>at <%= l message.created_at, format: :short %></small>
   <% if message.attachment_data? %>

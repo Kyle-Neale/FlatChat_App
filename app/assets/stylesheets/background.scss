@@ -1,0 +1,21 @@
+body html {
+  margin: 0;
+  padding: 0;
+}
+
+.backgroundimg {
+  background: url('http://leobruce.com/yahoo_site_admin/assets/images/PRINT_A3_Washington_Street_3.16102328.jpg');
+  background-size:  cover;
+  background-position: center;
+  background-repeat: repeat;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  height: 100vh;
+  width: 100%;
+  background-color: hsla(10,100%,100%,0.30);
+  background-blend-mode: overlay;
+  background-repeat: no-repeat;
+}

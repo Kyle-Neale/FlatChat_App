@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ActionCableUploader</title>
+  <%= csrf_meta_tags %>
+  <%= action_cable_meta_tag %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div class="row backgroundimg">
+    <div class="container">
+      <header class="container">
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                <%= link_to "Flat_Chat", root_path, class:"navbar-brand" %>
+              </div>
+          <ul class="nav navbar-nav navbar-right">
+          <% if signed_in? %>
+            Signed in as: <%= current_user.email %>
+            <%= button_to 'Sign out', sign_out_path, method: :delete %>
+          <% else %>
+            <%= link_to 'Sign in', sign_in_path %>
+          <% end %>
+
+          <div id="flash">
+            <% flash.each do |key, value| %>
+              <%= tag.div value, class: "flash #{key}" %>
+            <% end %>
+          </div>
+        </ul>
+
+ </div>
+ </nav>
+ </header>
+ <div class="mx-auto" style="width: 850px;">
+   <div style="height:500px;width:800px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+
+<%= yield %>
+</div>
+   </div>
+   <div class="new_message">
+
+
+   <% if signed_in? %>
+   <h4>New message
+
+   <%= form_with url: '#', html: {id: 'new-message'} do |f| %>
+     <%= f.label :body %>
+     <%= f.text_area :body, id: 'message-body' %>
+
+     <div class="form-group">
+       <%= f.file_field :attachment, id: 'message-attachment' %>
+     </div>
+     <%= f.submit %>
+   <% end %>
+   <% end %>
+ </h4>
+   </div>
+</div>
+</div>
+</body>
+</html>

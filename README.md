@@ -1,10 +1,10 @@
-# Uploading Files With Rails and ActionCable - source code
+# Feelings Chat - An application utilizing Action Cable to be used for chatting about feelings.
 
-To play with this demo locally:
+To use this app:
 
 1. Clone the repo
-2. `rails db:migrate`
-3. `rails s`
+2. Run bundle install
+3. `rails db:migrate` && `rails s`
 4. Visit `http://localhost:3000` 
-5. Register with any credentials
+5. To create a user, click 'sign up' and input email and passowrd!
 6. Have fun!

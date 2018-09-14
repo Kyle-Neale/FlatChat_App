@@ -2,17 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>ActionCableUploader</title>
+  <title></title>
   <%= csrf_meta_tags %>
   <%= action_cable_meta_tag %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <script type="text/javascript" src="../../../assets/javascripts/gif.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-  <div class="row backgroundimg">
+  <div class="row">
     <div class="container">
       <header class="container">
             <nav class="navbar navbar-default">
@@ -35,77 +34,70 @@
           </div>
         </ul>
 
- </div>
- </nav>
- </header>
-   <div class="mx-auto" style="width: 850px;">
-     <div style="height:500px;width:800px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+          </div>
+        </nav>
+      </header>
+      <div class="mx-auto" style="width: 850px;">
+       <div style="height:500px;width:800px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
 
-      <%= yield %>
+        <%= yield %>
+        </div>
       </div>
+
+       <div class="new_message">
+         <% if signed_in? %>
+         <%= form_with url: '#', html: {id: 'new-message'} do |f| %>
+          <%= f.label :body %>
+          <%= f.text_field :body, id: 'message-body', class: "form-control" %>
+          <div class="form-group">
+            <%= f.file_field :attachment, id: 'message-attachment', class: 'file-button' %>
+          </div>
+          <%= f.submit id: 'submit-button' %>
+          <% end %>
+        <% end %>
+        <button id="myBtn">Add Gif</button>
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="gif-search" class="" action="index.html" method="post">
+              <input id="search-value" type="text" name="" value="" placeholder="Search">
+              <input id="search-button" type="submit" name="" value="Search">
+            </form>
+            <div class="container">
+            </div>
+          </div>
+        </div>
+       </div>
+
+       <script>
+          // Get the modal
+          var modal = document.getElementById('myModal');
+          // Get the button that opens the modal
+          var btn = document.getElementById("myBtn");
+          // Get the <span> element that closes the modal
+          var span = document.getElementsByClassName("close")[0];
+          // When the user clicks the button, open the modal
+          btn.onclick = function() {
+            modal.style.display = "block";
+          }
+          // When the user clicks on <span> (x), close the modal
+          span.onclick = function() {
+            modal.style.display = "none";
+          }
+          // When the user clicks anywhere outside of the modal, close it
+          window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+          }
+        </script>
+
+        <script type="text/javascript">
+
+
+        </script>
+
     </div>
-
-   <div class="new_message">
-   <% if signed_in? %>
-
-   <%= form_with url: '#', html: {id: 'new-message'} do |f| %>
-     <%= f.label :body %>
-     <%= f.text_area :body, id: 'message-body' %>
-
-     <div class="form-group">
-       <%= f.file_field :attachment, id: 'message-attachment' %>
-     </div>
-     <%= f.submit %>
-   <% end %>
-   <% end %>
-   </div>
-
-
-    <!-- Trigger/Open The Modal -->
-  <button id="myBtn">Add Gif</button>
-
-<!-- The Modal -->
-  <div id="myModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <form id="gif-search" class="" action="index.html" method="post">
-        <input id="search-value" type="text" name="" value="" placeholder="Search">
-        <input id="search-button" type="submit" name="" value="Search">
-      </form>
-
-      <div class="container">
-
-      </div>
-      <!-- <p>Some text in the Modal..</p> -->
-    </div>
-
   </div>
-
-<script>
-  // Get the modal
-  var modal = document.getElementById('myModal');
-  // Get the button that opens the modal
-  var btn = document.getElementById("myBtn");
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-  // When the user clicks the button, open the modal
-  btn.onclick = function() {
-    modal.style.display = "block";
-  }
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-  }
-</script>
-</div>
-</div>
 </body>
 </html>

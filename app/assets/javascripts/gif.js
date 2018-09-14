@@ -2,10 +2,15 @@ const BASE_URL = "https://api.giphy.com/v1/gifs/search";
 const API_KEY = "DuwEzu31R50wYuulJLODV01F71sREav0";
 const LIMIT = 30;
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".modal-content .container");
   const searchForm = document.querySelector("form#gif-search");
+  const gifBttn = document.querySelector("button#myBtn");
+  const submitBttn = document.querySelector("input#submit-button");
+
+  // gifBttn.style.display = "inline";
+  gifBttn.style.float = "right";
+  submitBttn.style.float = "right";
 
   searchForm.addEventListener("submit",  (event) => {
     event.preventDefault();
@@ -30,4 +35,5 @@ document.addEventListener("DOMContentLoaded", () => {
       messageBody.value = gifImg.src;
     }
   })
+
 })

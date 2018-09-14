@@ -1,23 +1,18 @@
 body html {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
-.backgroundimg {
-  background: url('http://leobruce.com/yahoo_site_admin/assets/images/PRINT_A3_Washington_Street_3.16102328.jpg');
-  background-size:  cover;
-  background-position: center;
-  background-repeat: repeat;
+body {
+    background-color: #BEE3DB;
+}
 
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+nav.navbar {
+    background-color: #FAF9F9;
+}
 
-  height: 100vh;
-  width: 100%;
-  background-color: hsla(10,100%,100%,0.30);
-  background-blend-mode: overlay;
-  background-repeat: no-repeat;
+hr {
+  border-color: #555B6E;
 }
 
 
@@ -60,18 +55,18 @@ body html {
     cursor: pointer;
 }
 
-#gif-search {
-
-}
-
-#search-button {
-
-}
-
 img.gif {
   border-radius: 25px;
   /* background: #73AD21; */
   padding: 10px;
   width: 200px;
   height: 150px;
+}
+
+div.message {
+  // background-color: ;
+}
+
+div.message small{
+  float: right;
 }

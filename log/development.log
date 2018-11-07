@@ -10605,3 +10605,964 @@ ChatChannel stopped streaming from chat_channel
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+Started GET "/" for 127.0.0.1 at 2018-09-14 15:08:54 -0400
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (5.1.6) lib/active_record/migration.rb:576:in `check_pending!'
+activerecord (5.1.6) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.6) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.6) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.6) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.6) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.6) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.6) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.6) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/method_override.rb:22:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.6) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.6) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170530142725)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "email" varchar NOT NULL, "encrypted_password" varchar(128) NOT NULL, "confirmation_token" varchar(128), "remember_token" varchar(128) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_users_on_remember_token" ON "users" ("remember_token")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170530142725"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMessages (20170530174053)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "body" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_273a25a7a6"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_user_id" ON "messages" ("user_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170530174053"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddAttachmentDataToMessages (20170531165702)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "messages" ADD "attachment_data" text[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170531165702"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-09-14 19:09:10.271208"], ["updated_at", "2018-09-14 19:09:10.271208"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_remember_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_remember_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+Started GET "/" for 127.0.0.1 at 2018-09-14 15:09:45 -0400
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ChatsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/sign_in
+Filter chain halted as :require_login rendered or redirected
+Completed 302 Found in 69ms (ActiveRecord: 0.9ms)
+
+
+Started GET "/sign_in" for 127.0.0.1 at 2018-09-14 15:09:55 -0400
+Processing by Clearance::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/_form.html.erb (24.8ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application (30.8ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+Completed 200 OK in 505ms (Views: 502.3ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2018-09-14 15:10:01 -0400
+Processing by Clearance::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "session"=>{"email"=>"", "password"=>"[FILTERED]"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/_form.html.erb (2.0ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application (7.0ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 77ms (Views: 66.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/sign_up" for 127.0.0.1 at 2018-09-14 15:10:11 -0400
+Processing by Clearance::UsersController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/_form.html.erb (1.7ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/new.html.erb within layouts/application (11.7ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+Completed 200 OK in 87ms (Views: 67.8ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2018-09-14 15:10:22 -0400
+Processing by Clearance::UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"kyle@gmail.com", "password"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "66d256a13f2f3a3e55b8f4c4b1ead0d28a213ba1"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "kyle@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "email", "encrypted_password", "remember_token") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2018-09-14 19:10:22.859579"], ["updated_at", "2018-09-14 19:10:22.859579"], ["email", "kyle@gmail.com"], ["encrypted_password", "$2a$10$Goh.PJ2Fbikn.AHW9mhwkelCgffk3RdL68N09BQB0KmAkjkfW1Fom"], ["remember_token", "bc7114b3cfa61c590b6c58c6f89e6732d0286b51"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 87ms (ActiveRecord: 3.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-09-14 15:10:22 -0400
+Processing by ChatsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "bc7114b3cfa61c590b6c58c6f89e6732d0286b51"], ["LIMIT", 1]]
+  Rendering chats/index.html.erb within layouts/application
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT "messages".* FROM "messages" ORDER BY "messages"."created_at" ASC[0m
+  Rendered collection of templates [0 times] (0.0ms)
+  Rendered chats/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 75ms (Views: 44.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2018-09-14 15:10:23 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:10:23 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT ?[0m  [["remember_token", "bc7114b3cfa61c590b6c58c6f89e6732d0286b51"], ["LIMIT", 1]]
+Registered connection (Z2lkOi8vYWN0aW9uLWNhYmxlLXVwbG9hZGVyL1VzZXIvMQ)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#send_message({"message"=>"Hello"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "Hello"], ["created_at", "2018-09-14 19:10:28.641610"], ["updated_at", "2018-09-14 19:10:28.641610"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 282ee44b-ff3f-4a82-bf88-893a94809ca9) to Async(default) with arguments: #<GlobalID:0x007faaa4cecfb0 @uri=#<URI::GID gid://action-cable-uploader/Message/1>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [282ee44b-ff3f-4a82-bf88-893a94809ca9] Performing MessageBroadcastJob (Job ID: 282ee44b-ff3f-4a82-bf88-893a94809ca9) from Async(default) with arguments: #<GlobalID:0x007faaa1280598 @uri=#<URI::GID gid://action-cable-uploader/Message/1>>
+[ActiveJob] [MessageBroadcastJob] [282ee44b-ff3f-4a82-bf88-893a94809ca9]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [282ee44b-ff3f-4a82-bf88-893a94809ca9]   Rendered messages/_message.html.erb (4.5ms)
+[ActiveJob] [MessageBroadcastJob] [282ee44b-ff3f-4a82-bf88-893a94809ca9] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 19:10</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [282ee44b-ff3f-4a82-bf88-893a94809ca9] Performed MessageBroadcastJob (Job ID: 282ee44b-ff3f-4a82-bf88-893a94809ca9) from Async(default) in 40.85ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 19:10</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+Started GET "/" for 127.0.0.1 at 2018-09-14 15:10:53 -0400
+Processing by ChatsController#index as HTML
+Redirected to http://localhost:3000/sign_in
+Filter chain halted as :require_login rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/sign_in" for 127.0.0.1 at 2018-09-14 15:10:53 -0400
+Processing by Clearance::SessionsController#new as HTML
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/_form.html.erb (3.1ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application (8.3ms)
+Completed 200 OK in 55ms (Views: 54.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2018-09-14 15:10:56 -0400
+Processing by Clearance::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "session"=>{"email"=>"", "password"=>"[FILTERED]"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", ""], ["LIMIT", 1]]
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/_form.html.erb (1.9ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application (6.7ms)
+Completed 401 Unauthorized in 58ms (Views: 56.6ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/sign_up" for 127.0.0.1 at 2018-09-14 15:10:59 -0400
+Processing by Clearance::UsersController#new as HTML
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/_form.html.erb (1.2ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/new.html.erb within layouts/application (7.2ms)
+Completed 200 OK in 50ms (Views: 48.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2018-09-14 15:11:13 -0400
+Processing by Clearance::UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"masud@gmail.com", "password"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "masud@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "email", "encrypted_password", "remember_token") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2018-09-14 19:11:13.902004"], ["updated_at", "2018-09-14 19:11:13.902004"], ["email", "masud@gmail.com"], ["encrypted_password", "$2a$10$VUEFK4qG10ozcmZFO3vyVeR0oEE0Ck7NzGFVmgIsVVH.Us2.cyxtu"], ["remember_token", "7896cea3ec4f04c4960d6b1351270c1c82fa1c0b"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 81ms (ActiveRecord: 2.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-09-14 15:11:13 -0400
+Processing by ChatsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "7896cea3ec4f04c4960d6b1351270c1c82fa1c0b"], ["LIMIT", 1]]
+  Rendering chats/index.html.erb within layouts/application
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT "messages".* FROM "messages" ORDER BY "messages"."created_at" ASC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered collection of messages/_message.html.erb [1 times] (2.1ms)
+  Rendered chats/index.html.erb within layouts/application (6.5ms)
+Completed 200 OK in 54ms (Views: 48.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2018-09-14 15:11:14 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:11:14 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT ?[0m  [["remember_token", "7896cea3ec4f04c4960d6b1351270c1c82fa1c0b"], ["LIMIT", 1]]
+Registered connection (Z2lkOi8vYWN0aW9uLWNhYmxlLXVwbG9hZGVyL1VzZXIvMg)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#send_message({"message"=>"Hey <3"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["body", "Hey <3"], ["created_at", "2018-09-14 19:11:31.049660"], ["updated_at", "2018-09-14 19:11:31.049660"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [6209ff55-d11f-484a-88f1-518077343152] Performing MessageBroadcastJob (Job ID: 6209ff55-d11f-484a-88f1-518077343152) from Async(default) with arguments: #<GlobalID:0x007faaa43c3d80 @uri=#<URI::GID gid://action-cable-uploader/Message/2>>
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 6209ff55-d11f-484a-88f1-518077343152) to Async(default) with arguments: #<GlobalID:0x007faaa43f9278 @uri=#<URI::GID gid://action-cable-uploader/Message/2>>
+[ActiveJob] [MessageBroadcastJob] [6209ff55-d11f-484a-88f1-518077343152]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [6209ff55-d11f-484a-88f1-518077343152]   Rendered messages/_message.html.erb (2.4ms)
+[ActiveJob] [MessageBroadcastJob] [6209ff55-d11f-484a-88f1-518077343152] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hey &lt;3\n  <br>\n  <small>at 14 Sep 19:11</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [6209ff55-d11f-484a-88f1-518077343152] Performed MessageBroadcastJob (Job ID: 6209ff55-d11f-484a-88f1-518077343152) from Async(default) in 27.2ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hey &lt;3\n  <br>\n  <small>at 14 Sep 19:11</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hey &lt;3\n  <br>\n  <small>at 14 Sep 19:11</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"Oh shit, what's up?"})
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "Oh shit, what's up?"], ["created_at", "2018-09-14 19:11:38.785434"], ["updated_at", "2018-09-14 19:11:38.785434"]]
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: f15112a9-6ad2-4585-bd6f-d191150566e7) to Async(default) with arguments: #<GlobalID:0x007faaa4add490 @uri=#<URI::GID gid://action-cable-uploader/Message/3>>
+[ActiveJob] [MessageBroadcastJob] [f15112a9-6ad2-4585-bd6f-d191150566e7] Performing MessageBroadcastJob (Job ID: f15112a9-6ad2-4585-bd6f-d191150566e7) from Async(default) with arguments: #<GlobalID:0x007faaa4ab4900 @uri=#<URI::GID gid://action-cable-uploader/Message/3>>
+[ActiveJob] [MessageBroadcastJob] [f15112a9-6ad2-4585-bd6f-d191150566e7]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [f15112a9-6ad2-4585-bd6f-d191150566e7]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [f15112a9-6ad2-4585-bd6f-d191150566e7] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Oh shit, what&#39;s up?\n  <br>\n  <small>at 14 Sep 19:11</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [f15112a9-6ad2-4585-bd6f-d191150566e7] Performed MessageBroadcastJob (Job ID: f15112a9-6ad2-4585-bd6f-d191150566e7) from Async(default) in 30.38ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Oh shit, what&#39;s up?\n  <br>\n  <small>at 14 Sep 19:11</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Oh shit, what&#39;s up?\n  <br>\n  <small>at 14 Sep 19:11</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"Hello"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "Hello"], ["created_at", "2018-09-14 19:25:28.229590"], ["updated_at", "2018-09-14 19:25:28.229590"]]
+  [1m[35m (2.7ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 62120929-3ef4-4ef2-a70f-35433c68b600) to Async(default) with arguments: #<GlobalID:0x007faaa46cddf0 @uri=#<URI::GID gid://action-cable-uploader/Message/4>>
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [62120929-3ef4-4ef2-a70f-35433c68b600] Performing MessageBroadcastJob (Job ID: 62120929-3ef4-4ef2-a70f-35433c68b600) from Async(default) with arguments: #<GlobalID:0x007faaa7460178 @uri=#<URI::GID gid://action-cable-uploader/Message/4>>
+[ActiveJob] [MessageBroadcastJob] [62120929-3ef4-4ef2-a70f-35433c68b600]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [62120929-3ef4-4ef2-a70f-35433c68b600]   Rendered messages/_message.html.erb (2.1ms)
+[ActiveJob] [MessageBroadcastJob] [62120929-3ef4-4ef2-a70f-35433c68b600] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [62120929-3ef4-4ef2-a70f-35433c68b600] Performed MessageBroadcastJob (Job ID: 62120929-3ef4-4ef2-a70f-35433c68b600) from Async(default) in 37.31ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"Hey Kyle!"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["body", "Hey Kyle!"], ["created_at", "2018-09-14 19:25:33.892934"], ["updated_at", "2018-09-14 19:25:33.892934"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 8e25b33f-d36e-4c9c-b4e1-a7133543222f) to Async(default) with arguments: #<GlobalID:0x007faaa1518288 @uri=#<URI::GID gid://action-cable-uploader/Message/5>>
+[ActiveJob] [MessageBroadcastJob] [8e25b33f-d36e-4c9c-b4e1-a7133543222f] Performing MessageBroadcastJob (Job ID: 8e25b33f-d36e-4c9c-b4e1-a7133543222f) from Async(default) with arguments: #<GlobalID:0x007faaa733a870 @uri=#<URI::GID gid://action-cable-uploader/Message/5>>
+[ActiveJob] [MessageBroadcastJob] [8e25b33f-d36e-4c9c-b4e1-a7133543222f]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [8e25b33f-d36e-4c9c-b4e1-a7133543222f]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [8e25b33f-d36e-4c9c-b4e1-a7133543222f] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hey Kyle!\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [8e25b33f-d36e-4c9c-b4e1-a7133543222f] Performed MessageBroadcastJob (Job ID: 8e25b33f-d36e-4c9c-b4e1-a7133543222f) from Async(default) in 24.67ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hey Kyle!\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hey Kyle!\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"https://media3.giphy.com/media/aC45M5Q4D07Pq/giphy.gif"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["body", "https://media3.giphy.com/media/aC45M5Q4D07Pq/giphy.gif"], ["created_at", "2018-09-14 19:25:59.163676"], ["updated_at", "2018-09-14 19:25:59.163676"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 92148502-ba01-49dd-b359-0e5658c9cd57) to Async(default) with arguments: #<GlobalID:0x007faaa45cfd40 @uri=#<URI::GID gid://action-cable-uploader/Message/6>>
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [92148502-ba01-49dd-b359-0e5658c9cd57] Performing MessageBroadcastJob (Job ID: 92148502-ba01-49dd-b359-0e5658c9cd57) from Async(default) with arguments: #<GlobalID:0x007faaa45c9e40 @uri=#<URI::GID gid://action-cable-uploader/Message/6>>
+[ActiveJob] [MessageBroadcastJob] [92148502-ba01-49dd-b359-0e5658c9cd57]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [92148502-ba01-49dd-b359-0e5658c9cd57]   Rendered messages/_message.html.erb (2.1ms)
+[ActiveJob] [MessageBroadcastJob] [92148502-ba01-49dd-b359-0e5658c9cd57] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n    <img src=\"https://media3.giphy.com/media/aC45M5Q4D07Pq/giphy.gif\">\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [92148502-ba01-49dd-b359-0e5658c9cd57] Performed MessageBroadcastJob (Job ID: 92148502-ba01-49dd-b359-0e5658c9cd57) from Async(default) in 26.01ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n    <img src=\"https://media3.giphy.com/media/aC45M5Q4D07Pq/giphy.gif\">\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n    <img src=\"https://media3.giphy.com/media/aC45M5Q4D07Pq/giphy.gif\">\n  <br>\n  <small>at 14 Sep 19:25</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+Started GET "/" for 127.0.0.1 at 2018-09-14 15:26:31 -0400
+Processing by ChatsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "7896cea3ec4f04c4960d6b1351270c1c82fa1c0b"], ["LIMIT", 1]]
+  Rendering chats/index.html.erb within layouts/application
+  [1m[36mMessage Load (0.7ms)[0m  [1m[34mSELECT "messages".* FROM "messages" ORDER BY "messages"."created_at" ASC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered collection of messages/_message.html.erb [6 times] (7.5ms)
+  Rendered chats/index.html.erb within layouts/application (12.2ms)
+Completed 200 OK in 56ms (Views: 51.4ms | ActiveRecord: 1.2ms)
+
+
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:26:31 -0400
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for 127.0.0.1 at 2018-09-14 15:26:31 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:26:31 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT ?[0m  [["remember_token", "7896cea3ec4f04c4960d6b1351270c1c82fa1c0b"], ["LIMIT", 1]]
+Registered connection (Z2lkOi8vYWN0aW9uLWNhYmxlLXVwbG9hZGVyL1VzZXIvMg)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#send_message({"message"=>"sjdnksjdnfadsf"})
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["body", "sjdnksjdnfadsf"], ["created_at", "2018-09-14 19:29:56.369877"], ["updated_at", "2018-09-14 19:29:56.369877"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: a14a62da-4199-4da6-9fd8-cce8d40fed3c) to Async(default) with arguments: #<GlobalID:0x007faaa470c988 @uri=#<URI::GID gid://action-cable-uploader/Message/7>>
+  [1m[36mMessage Load (0.8ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [a14a62da-4199-4da6-9fd8-cce8d40fed3c] Performing MessageBroadcastJob (Job ID: a14a62da-4199-4da6-9fd8-cce8d40fed3c) from Async(default) with arguments: #<GlobalID:0x007faaa48fcdb0 @uri=#<URI::GID gid://action-cable-uploader/Message/7>>
+[ActiveJob] [MessageBroadcastJob] [a14a62da-4199-4da6-9fd8-cce8d40fed3c]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [a14a62da-4199-4da6-9fd8-cce8d40fed3c]   Rendered messages/_message.html.erb (3.2ms)
+[ActiveJob] [MessageBroadcastJob] [a14a62da-4199-4da6-9fd8-cce8d40fed3c] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  sjdnksjdnfadsf\n  <br>\n  <small>at 14 Sep 19:29</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [a14a62da-4199-4da6-9fd8-cce8d40fed3c] Performed MessageBroadcastJob (Job ID: a14a62da-4199-4da6-9fd8-cce8d40fed3c) from Async(default) in 31.35ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  sjdnksjdnfadsf\n  <br>\n  <small>at 14 Sep 19:29</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  sjdnksjdnfadsf\n  <br>\n  <small>at 14 Sep 19:29</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:45:30 -0400
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for 127.0.0.1 at 2018-09-14 15:45:31 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:45:31 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT ?[0m  [["remember_token", "bc7114b3cfa61c590b6c58c6f89e6732d0286b51"], ["LIMIT", 1]]
+Registered connection (Z2lkOi8vYWN0aW9uLWNhYmxlLXVwbG9hZGVyL1VzZXIvMQ)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#send_message({"message"=>"Hi"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["body", "Hi"], ["created_at", "2018-09-14 19:46:56.734947"], ["updated_at", "2018-09-14 19:46:56.734947"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: ff7907e1-648f-46d6-ad57-36af312b5dbe) to Async(default) with arguments: #<GlobalID:0x007faaa7772988 @uri=#<URI::GID gid://action-cable-uploader/Message/8>>
+[ActiveJob] [MessageBroadcastJob] [ff7907e1-648f-46d6-ad57-36af312b5dbe] Performing MessageBroadcastJob (Job ID: ff7907e1-648f-46d6-ad57-36af312b5dbe) from Async(default) with arguments: #<GlobalID:0x007faaa1c78d20 @uri=#<URI::GID gid://action-cable-uploader/Message/8>>
+[ActiveJob] [MessageBroadcastJob] [ff7907e1-648f-46d6-ad57-36af312b5dbe]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [ff7907e1-648f-46d6-ad57-36af312b5dbe]   Rendered messages/_message.html.erb (2.3ms)
+[ActiveJob] [MessageBroadcastJob] [ff7907e1-648f-46d6-ad57-36af312b5dbe] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hi\n  <br>\n  <small>at 14 Sep 19:46</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [ff7907e1-648f-46d6-ad57-36af312b5dbe] Performed MessageBroadcastJob (Job ID: ff7907e1-648f-46d6-ad57-36af312b5dbe) from Async(default) in 25.97ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hi\n  <br>\n  <small>at 14 Sep 19:46</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  Hi\n  <br>\n  <small>at 14 Sep 19:46</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"Kyle"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "Kyle"], ["created_at", "2018-09-14 19:47:02.665836"], ["updated_at", "2018-09-14 19:47:02.665836"]]
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 696fcfcb-716c-4a84-be2e-b934a78f406a) to Async(default) with arguments: #<GlobalID:0x007faaa7792b70 @uri=#<URI::GID gid://action-cable-uploader/Message/9>>
+[ActiveJob] [MessageBroadcastJob] [696fcfcb-716c-4a84-be2e-b934a78f406a] Performing MessageBroadcastJob (Job ID: 696fcfcb-716c-4a84-be2e-b934a78f406a) from Async(default) with arguments: #<GlobalID:0x007faaa0b2df20 @uri=#<URI::GID gid://action-cable-uploader/Message/9>>
+[ActiveJob] [MessageBroadcastJob] [696fcfcb-716c-4a84-be2e-b934a78f406a]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [696fcfcb-716c-4a84-be2e-b934a78f406a]   Rendered messages/_message.html.erb (2.0ms)
+[ActiveJob] [MessageBroadcastJob] [696fcfcb-716c-4a84-be2e-b934a78f406a] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Kyle\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [696fcfcb-716c-4a84-be2e-b934a78f406a] Performed MessageBroadcastJob (Job ID: 696fcfcb-716c-4a84-be2e-b934a78f406a) from Async(default) in 26.83ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Kyle\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Kyle\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"https://media1.giphy.com/media/hgZM73sEHyV44/giphy.gif"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["body", "https://media1.giphy.com/media/hgZM73sEHyV44/giphy.gif"], ["created_at", "2018-09-14 19:47:34.431015"], ["updated_at", "2018-09-14 19:47:34.431015"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 5a3fc4b9-4cef-4aa8-a781-afff31a408e3) to Async(default) with arguments: #<GlobalID:0x007faaa77b10c0 @uri=#<URI::GID gid://action-cable-uploader/Message/10>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [5a3fc4b9-4cef-4aa8-a781-afff31a408e3] Performing MessageBroadcastJob (Job ID: 5a3fc4b9-4cef-4aa8-a781-afff31a408e3) from Async(default) with arguments: #<GlobalID:0x007faaa77ba350 @uri=#<URI::GID gid://action-cable-uploader/Message/10>>
+[ActiveJob] [MessageBroadcastJob] [5a3fc4b9-4cef-4aa8-a781-afff31a408e3]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [5a3fc4b9-4cef-4aa8-a781-afff31a408e3]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [5a3fc4b9-4cef-4aa8-a781-afff31a408e3] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/hgZM73sEHyV44/giphy.gif\">\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [5a3fc4b9-4cef-4aa8-a781-afff31a408e3] Performed MessageBroadcastJob (Job ID: 5a3fc4b9-4cef-4aa8-a781-afff31a408e3) from Async(default) in 26.01ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/hgZM73sEHyV44/giphy.gif\">\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/hgZM73sEHyV44/giphy.gif\">\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"WASSUP DAN"})
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["body", "WASSUP DAN"], ["created_at", "2018-09-14 19:47:46.864145"], ["updated_at", "2018-09-14 19:47:46.864145"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: dcb758a2-645a-4aae-b247-c29b879dddeb) to Async(default) with arguments: #<GlobalID:0x007faaa77d0a88 @uri=#<URI::GID gid://action-cable-uploader/Message/11>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [dcb758a2-645a-4aae-b247-c29b879dddeb] Performing MessageBroadcastJob (Job ID: dcb758a2-645a-4aae-b247-c29b879dddeb) from Async(default) with arguments: #<GlobalID:0x007faaa77da240 @uri=#<URI::GID gid://action-cable-uploader/Message/11>>
+[ActiveJob] [MessageBroadcastJob] [dcb758a2-645a-4aae-b247-c29b879dddeb]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [dcb758a2-645a-4aae-b247-c29b879dddeb]   Rendered messages/_message.html.erb (2.5ms)
+[ActiveJob] [MessageBroadcastJob] [dcb758a2-645a-4aae-b247-c29b879dddeb] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  WASSUP DAN\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [dcb758a2-645a-4aae-b247-c29b879dddeb] Performed MessageBroadcastJob (Job ID: dcb758a2-645a-4aae-b247-c29b879dddeb) from Async(default) in 29.7ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  WASSUP DAN\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>masud@gmail.com</strong> says:\n  WASSUP DAN\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"OH SIHT"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "OH SIHT"], ["created_at", "2018-09-14 19:47:55.352644"], ["updated_at", "2018-09-14 19:47:55.352644"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: b41f12dc-61db-4097-9836-ec5c2226bc7d) to Async(default) with arguments: #<GlobalID:0x007faaa4c6c1d0 @uri=#<URI::GID gid://action-cable-uploader/Message/12>>
+[ActiveJob] [MessageBroadcastJob] [b41f12dc-61db-4097-9836-ec5c2226bc7d] Performing MessageBroadcastJob (Job ID: b41f12dc-61db-4097-9836-ec5c2226bc7d) from Async(default) with arguments: #<GlobalID:0x007faaa4c5ff48 @uri=#<URI::GID gid://action-cable-uploader/Message/12>>
+[ActiveJob] [MessageBroadcastJob] [b41f12dc-61db-4097-9836-ec5c2226bc7d]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [b41f12dc-61db-4097-9836-ec5c2226bc7d]   Rendered messages/_message.html.erb (2.0ms)
+[ActiveJob] [MessageBroadcastJob] [b41f12dc-61db-4097-9836-ec5c2226bc7d] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  OH SIHT\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [b41f12dc-61db-4097-9836-ec5c2226bc7d] Performed MessageBroadcastJob (Job ID: b41f12dc-61db-4097-9836-ec5c2226bc7d) from Async(default) in 25.83ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  OH SIHT\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  OH SIHT\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"ITS DAN"})
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "ITS DAN"], ["created_at", "2018-09-14 19:47:57.023800"], ["updated_at", "2018-09-14 19:47:57.023800"]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: c7f9b4b8-1db0-49d2-b812-b6af793b8a36) to Async(default) with arguments: #<GlobalID:0x007faaa8240f68 @uri=#<URI::GID gid://action-cable-uploader/Message/13>>
+  [1m[36mMessage Load (0.5ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [c7f9b4b8-1db0-49d2-b812-b6af793b8a36] Performing MessageBroadcastJob (Job ID: c7f9b4b8-1db0-49d2-b812-b6af793b8a36) from Async(default) with arguments: #<GlobalID:0x007faaa8249ff0 @uri=#<URI::GID gid://action-cable-uploader/Message/13>>
+[ActiveJob] [MessageBroadcastJob] [c7f9b4b8-1db0-49d2-b812-b6af793b8a36]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [c7f9b4b8-1db0-49d2-b812-b6af793b8a36]   Rendered messages/_message.html.erb (2.2ms)
+[ActiveJob] [MessageBroadcastJob] [c7f9b4b8-1db0-49d2-b812-b6af793b8a36] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  ITS DAN\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [c7f9b4b8-1db0-49d2-b812-b6af793b8a36] Performed MessageBroadcastJob (Job ID: c7f9b4b8-1db0-49d2-b812-b6af793b8a36) from Async(default) in 32.77ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  ITS DAN\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  ITS DAN\n  <br>\n  <small>at 14 Sep 19:47</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+Started DELETE "/sign_out" for 127.0.0.1 at 2018-09-14 15:50:12 -0400
+Processing by Clearance::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "7896cea3ec4f04c4960d6b1351270c1c82fa1c0b"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "users" SET "remember_token" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["remember_token", "1bf1984da5a23170360cb04792aad2c125ce8efa"], ["updated_at", "2018-09-14 19:50:12.875499"], ["id", 2]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/sign_in
+Completed 302 Found in 14ms (ActiveRecord: 5.1ms)
+
+
+Started GET "/sign_in" for 127.0.0.1 at 2018-09-14 15:50:12 -0400
+Processing by Clearance::SessionsController#new as HTML
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/_form.html.erb (1.5ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 48ms (Views: 47.0ms | ActiveRecord: 0.0ms)
+
+
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:50:12 -0400
+ChatChannel stopped streaming from chat_channel
+Started GET "/sign_up" for 127.0.0.1 at 2018-09-14 15:50:16 -0400
+Processing by Clearance::UsersController#new as HTML
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/_form.html.erb (1.0ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/users/new.html.erb within layouts/application (6.3ms)
+Completed 200 OK in 48ms (Views: 47.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2018-09-14 15:50:31 -0400
+Processing by Clearance::UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"hanzo@gmail.com", "password"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "hanzo@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "email", "encrypted_password", "remember_token") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2018-09-14 19:50:31.396740"], ["updated_at", "2018-09-14 19:50:31.396740"], ["email", "hanzo@gmail.com"], ["encrypted_password", "$2a$10$BXk3UDx8uj.AskHOxC8SPeUKKJShiorGiU1A5rpETxw7kwgp7mYDm"], ["remember_token", "a9148e01fe6636e4420ee2cf5c9aaae49065d2ff"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 78ms (ActiveRecord: 2.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-09-14 15:50:31 -0400
+Processing by ChatsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "a9148e01fe6636e4420ee2cf5c9aaae49065d2ff"], ["LIMIT", 1]]
+  Rendering chats/index.html.erb within layouts/application
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT "messages".* FROM "messages" ORDER BY "messages"."created_at" ASC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered collection of messages/_message.html.erb [13 times] (16.3ms)
+  Rendered chats/index.html.erb within layouts/application (20.2ms)
+Completed 200 OK in 59ms (Views: 54.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2018-09-14 15:50:31 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 15:50:31 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT ?[0m  [["remember_token", "a9148e01fe6636e4420ee2cf5c9aaae49065d2ff"], ["LIMIT", 1]]
+Registered connection (Z2lkOi8vYWN0aW9uLWNhYmxlLXVwbG9hZGVyL1VzZXIvMw)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#send_message({"message"=>"hey masud, you're the best!"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "hey masud, you're the best!"], ["created_at", "2018-09-14 19:50:52.939965"], ["updated_at", "2018-09-14 19:50:52.939965"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 6b1ea19c-545d-43f5-b1f2-4fd5b103c488) to Async(default) with arguments: #<GlobalID:0x007faaa17dc5f0 @uri=#<URI::GID gid://action-cable-uploader/Message/14>>
+[ActiveJob] [MessageBroadcastJob] [6b1ea19c-545d-43f5-b1f2-4fd5b103c488] Performing MessageBroadcastJob (Job ID: 6b1ea19c-545d-43f5-b1f2-4fd5b103c488) from Async(default) with arguments: #<GlobalID:0x007faaa8689cf0 @uri=#<URI::GID gid://action-cable-uploader/Message/14>>
+[ActiveJob] [MessageBroadcastJob] [6b1ea19c-545d-43f5-b1f2-4fd5b103c488]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [6b1ea19c-545d-43f5-b1f2-4fd5b103c488]   Rendered messages/_message.html.erb (2.7ms)
+[ActiveJob] [MessageBroadcastJob] [6b1ea19c-545d-43f5-b1f2-4fd5b103c488] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  hey masud, you&#39;re the best!\n  <br>\n  <small>at 14 Sep 19:50</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [6b1ea19c-545d-43f5-b1f2-4fd5b103c488] Performed MessageBroadcastJob (Job ID: 6b1ea19c-545d-43f5-b1f2-4fd5b103c488) from Async(default) in 28.78ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  hey masud, you&#39;re the best!\n  <br>\n  <small>at 14 Sep 19:50</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  hey masud, you&#39;re the best!\n  <br>\n  <small>at 14 Sep 19:50</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"NO I am not! My belly is getting bigger and bigger and bigger as the days go by. "})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "NO I am not! My belly is getting bigger and bigger and bigger as the days go by. "], ["created_at", "2018-09-14 19:51:49.465678"], ["updated_at", "2018-09-14 19:51:49.465678"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 4bd129d7-85c1-4016-8625-d1803ab82b0c) to Async(default) with arguments: #<GlobalID:0x007faaa0f90658 @uri=#<URI::GID gid://action-cable-uploader/Message/15>>
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [4bd129d7-85c1-4016-8625-d1803ab82b0c] Performing MessageBroadcastJob (Job ID: 4bd129d7-85c1-4016-8625-d1803ab82b0c) from Async(default) with arguments: #<GlobalID:0x007faaa897f478 @uri=#<URI::GID gid://action-cable-uploader/Message/15>>
+[ActiveJob] [MessageBroadcastJob] [4bd129d7-85c1-4016-8625-d1803ab82b0c]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [4bd129d7-85c1-4016-8625-d1803ab82b0c]   Rendered messages/_message.html.erb (2.2ms)
+[ActiveJob] [MessageBroadcastJob] [4bd129d7-85c1-4016-8625-d1803ab82b0c] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  NO I am not! My belly is getting bigger and bigger and bigger as the days go by. \n  <br>\n  <small>at 14 Sep 19:51</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [4bd129d7-85c1-4016-8625-d1803ab82b0c] Performed MessageBroadcastJob (Job ID: 4bd129d7-85c1-4016-8625-d1803ab82b0c) from Async(default) in 26.36ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  NO I am not! My belly is getting bigger and bigger and bigger as the days go by. \n  <br>\n  <small>at 14 Sep 19:51</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  NO I am not! My belly is getting bigger and bigger and bigger as the days go by. \n  <br>\n  <small>at 14 Sep 19:51</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"WOW THIS APP IS GREAT! "})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "WOW THIS APP IS GREAT! "], ["created_at", "2018-09-14 19:52:22.559769"], ["updated_at", "2018-09-14 19:52:22.559769"]]
+  [1m[35m (2.9ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 53c6254f-5a5c-4653-956e-f688421b61fd) to Async(default) with arguments: #<GlobalID:0x007faaa872a6a0 @uri=#<URI::GID gid://action-cable-uploader/Message/16>>
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [53c6254f-5a5c-4653-956e-f688421b61fd] Performing MessageBroadcastJob (Job ID: 53c6254f-5a5c-4653-956e-f688421b61fd) from Async(default) with arguments: #<GlobalID:0x007faaa0fb31a8 @uri=#<URI::GID gid://action-cable-uploader/Message/16>>
+[ActiveJob] [MessageBroadcastJob] [53c6254f-5a5c-4653-956e-f688421b61fd]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [53c6254f-5a5c-4653-956e-f688421b61fd]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [53c6254f-5a5c-4653-956e-f688421b61fd] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  WOW THIS APP IS GREAT! \n  <br>\n  <small>at 14 Sep 19:52</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [53c6254f-5a5c-4653-956e-f688421b61fd] Performed MessageBroadcastJob (Job ID: 53c6254f-5a5c-4653-956e-f688421b61fd) from Async(default) in 24.27ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  WOW THIS APP IS GREAT! \n  <br>\n  <small>at 14 Sep 19:52</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  WOW THIS APP IS GREAT! \n  <br>\n  <small>at 14 Sep 19:52</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"YEAH IT IS ALMOST LIKE AIM BACK IN THE 1990!"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "YEAH IT IS ALMOST LIKE AIM BACK IN THE 1990!"], ["created_at", "2018-09-14 19:52:41.476600"], ["updated_at", "2018-09-14 19:52:41.476600"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 4ca56b97-8c07-4a09-80ae-3890ddbb73cc) to Async(default) with arguments: #<GlobalID:0x007faaa8741a58 @uri=#<URI::GID gid://action-cable-uploader/Message/17>>
+[ActiveJob] [MessageBroadcastJob] [4ca56b97-8c07-4a09-80ae-3890ddbb73cc] Performing MessageBroadcastJob (Job ID: 4ca56b97-8c07-4a09-80ae-3890ddbb73cc) from Async(default) with arguments: #<GlobalID:0x007faaa0fc2a18 @uri=#<URI::GID gid://action-cable-uploader/Message/17>>
+[ActiveJob] [MessageBroadcastJob] [4ca56b97-8c07-4a09-80ae-3890ddbb73cc]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [4ca56b97-8c07-4a09-80ae-3890ddbb73cc]   Rendered messages/_message.html.erb (2.0ms)
+[ActiveJob] [MessageBroadcastJob] [4ca56b97-8c07-4a09-80ae-3890ddbb73cc] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  YEAH IT IS ALMOST LIKE AIM BACK IN THE 1990!\n  <br>\n  <small>at 14 Sep 19:52</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [4ca56b97-8c07-4a09-80ae-3890ddbb73cc] Performed MessageBroadcastJob (Job ID: 4ca56b97-8c07-4a09-80ae-3890ddbb73cc) from Async(default) in 24.72ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  YEAH IT IS ALMOST LIKE AIM BACK IN THE 1990!\n  <br>\n  <small>at 14 Sep 19:52</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  YEAH IT IS ALMOST LIKE AIM BACK IN THE 1990!\n  <br>\n  <small>at 14 Sep 19:52</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"HELLO"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "HELLO"], ["created_at", "2018-09-14 19:58:36.210863"], ["updated_at", "2018-09-14 19:58:36.210863"]]
+  [1m[35m (2.7ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 1c3dabbe-cbe8-47fd-ab1b-fde628242082) to Async(default) with arguments: #<GlobalID:0x007faaa8b1e018 @uri=#<URI::GID gid://action-cable-uploader/Message/18>>
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [1c3dabbe-cbe8-47fd-ab1b-fde628242082] Performing MessageBroadcastJob (Job ID: 1c3dabbe-cbe8-47fd-ab1b-fde628242082) from Async(default) with arguments: #<GlobalID:0x007faaaa051908 @uri=#<URI::GID gid://action-cable-uploader/Message/18>>
+[ActiveJob] [MessageBroadcastJob] [1c3dabbe-cbe8-47fd-ab1b-fde628242082]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [1c3dabbe-cbe8-47fd-ab1b-fde628242082]   Rendered messages/_message.html.erb (2.0ms)
+[ActiveJob] [MessageBroadcastJob] [1c3dabbe-cbe8-47fd-ab1b-fde628242082] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 19:58</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [1c3dabbe-cbe8-47fd-ab1b-fde628242082] Performed MessageBroadcastJob (Job ID: 1c3dabbe-cbe8-47fd-ab1b-fde628242082) from Async(default) in 25.49ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 19:58</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 19:58</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"HELLO"})
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "HELLO"], ["created_at", "2018-09-14 19:58:48.320407"], ["updated_at", "2018-09-14 19:58:48.320407"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 85fd612f-ab68-4684-88e1-1591c2820116) to Async(default) with arguments: #<GlobalID:0x007faaa1dff838 @uri=#<URI::GID gid://action-cable-uploader/Message/19>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 19], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [85fd612f-ab68-4684-88e1-1591c2820116] Performing MessageBroadcastJob (Job ID: 85fd612f-ab68-4684-88e1-1591c2820116) from Async(default) with arguments: #<GlobalID:0x007faaa1dec008 @uri=#<URI::GID gid://action-cable-uploader/Message/19>>
+[ActiveJob] [MessageBroadcastJob] [85fd612f-ab68-4684-88e1-1591c2820116]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [85fd612f-ab68-4684-88e1-1591c2820116]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [85fd612f-ab68-4684-88e1-1591c2820116] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 19:58</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [85fd612f-ab68-4684-88e1-1591c2820116] Performed MessageBroadcastJob (Job ID: 85fd612f-ab68-4684-88e1-1591c2820116) from Async(default) in 25.17ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 19:58</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 19:58</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"HELLO"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "HELLO"], ["created_at", "2018-09-14 20:01:15.474974"], ["updated_at", "2018-09-14 20:01:15.474974"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: f335cd4c-26ec-41e2-baf4-e19e9f6c423d) to Async(default) with arguments: #<GlobalID:0x007faaa8be4a10 @uri=#<URI::GID gid://action-cable-uploader/Message/20>>
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [f335cd4c-26ec-41e2-baf4-e19e9f6c423d] Performing MessageBroadcastJob (Job ID: f335cd4c-26ec-41e2-baf4-e19e9f6c423d) from Async(default) with arguments: #<GlobalID:0x007faaaa111438 @uri=#<URI::GID gid://action-cable-uploader/Message/20>>
+[ActiveJob] [MessageBroadcastJob] [f335cd4c-26ec-41e2-baf4-e19e9f6c423d]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [f335cd4c-26ec-41e2-baf4-e19e9f6c423d]   Rendered messages/_message.html.erb (2.0ms)
+[ActiveJob] [MessageBroadcastJob] [f335cd4c-26ec-41e2-baf4-e19e9f6c423d] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [f335cd4c-26ec-41e2-baf4-e19e9f6c423d] Performed MessageBroadcastJob (Job ID: f335cd4c-26ec-41e2-baf4-e19e9f6c423d) from Async(default) in 29.56ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HELLO\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"WHAT'S UP KYLE"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "WHAT'S UP KYLE"], ["created_at", "2018-09-14 20:01:31.149642"], ["updated_at", "2018-09-14 20:01:31.149642"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 799fc16f-8846-42b3-927c-4f01d959b6f5) to Async(default) with arguments: #<GlobalID:0x007faaa073a648 @uri=#<URI::GID gid://action-cable-uploader/Message/21>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [799fc16f-8846-42b3-927c-4f01d959b6f5] Performing MessageBroadcastJob (Job ID: 799fc16f-8846-42b3-927c-4f01d959b6f5) from Async(default) with arguments: #<GlobalID:0x007faaa072a428 @uri=#<URI::GID gid://action-cable-uploader/Message/21>>
+[ActiveJob] [MessageBroadcastJob] [799fc16f-8846-42b3-927c-4f01d959b6f5]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [799fc16f-8846-42b3-927c-4f01d959b6f5]   Rendered messages/_message.html.erb (1.8ms)
+[ActiveJob] [MessageBroadcastJob] [799fc16f-8846-42b3-927c-4f01d959b6f5] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  WHAT&#39;S UP KYLE\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [799fc16f-8846-42b3-927c-4f01d959b6f5] Performed MessageBroadcastJob (Job ID: 799fc16f-8846-42b3-927c-4f01d959b6f5) from Async(default) in 25.33ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  WHAT&#39;S UP KYLE\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  WHAT&#39;S UP KYLE\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"https://media1.giphy.com/media/Ov5NiLVXT8JEc/giphy.gif"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "https://media1.giphy.com/media/Ov5NiLVXT8JEc/giphy.gif"], ["created_at", "2018-09-14 20:01:53.128063"], ["updated_at", "2018-09-14 20:01:53.128063"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 1ff97694-e48e-4043-8540-4594617cd13d) to Async(default) with arguments: #<GlobalID:0x007faaa122df28 @uri=#<URI::GID gid://action-cable-uploader/Message/22>>
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 22], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [1ff97694-e48e-4043-8540-4594617cd13d] Performing MessageBroadcastJob (Job ID: 1ff97694-e48e-4043-8540-4594617cd13d) from Async(default) with arguments: #<GlobalID:0x007faaa121f450 @uri=#<URI::GID gid://action-cable-uploader/Message/22>>
+[ActiveJob] [MessageBroadcastJob] [1ff97694-e48e-4043-8540-4594617cd13d]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [1ff97694-e48e-4043-8540-4594617cd13d]   Rendered messages/_message.html.erb (2.2ms)
+[ActiveJob] [MessageBroadcastJob] [1ff97694-e48e-4043-8540-4594617cd13d] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/Ov5NiLVXT8JEc/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [1ff97694-e48e-4043-8540-4594617cd13d] Performed MessageBroadcastJob (Job ID: 1ff97694-e48e-4043-8540-4594617cd13d) from Async(default) in 27.99ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/Ov5NiLVXT8JEc/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/Ov5NiLVXT8JEc/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:01</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"HEY WHATS UP"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "HEY WHATS UP"], ["created_at", "2018-09-14 20:02:18.298968"], ["updated_at", "2018-09-14 20:02:18.298968"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 23], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 376b7ccb-8b83-45c4-804a-e191fa8a6668) to Async(default) with arguments: #<GlobalID:0x007faaaa1aba10 @uri=#<URI::GID gid://action-cable-uploader/Message/23>>
+[ActiveJob] [MessageBroadcastJob] [376b7ccb-8b83-45c4-804a-e191fa8a6668] Performing MessageBroadcastJob (Job ID: 376b7ccb-8b83-45c4-804a-e191fa8a6668) from Async(default) with arguments: #<GlobalID:0x007faaa120cc60 @uri=#<URI::GID gid://action-cable-uploader/Message/23>>
+[ActiveJob] [MessageBroadcastJob] [376b7ccb-8b83-45c4-804a-e191fa8a6668]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [376b7ccb-8b83-45c4-804a-e191fa8a6668]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [376b7ccb-8b83-45c4-804a-e191fa8a6668] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HEY WHATS UP\n  <br>\n  <small>at 14 Sep 20:02</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [376b7ccb-8b83-45c4-804a-e191fa8a6668] Performed MessageBroadcastJob (Job ID: 376b7ccb-8b83-45c4-804a-e191fa8a6668) from Async(default) in 33.23ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HEY WHATS UP\n  <br>\n  <small>at 14 Sep 20:02</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HEY WHATS UP\n  <br>\n  <small>at 14 Sep 20:02</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"https://media1.giphy.com/media/l0Hluv3yV9QRirYc0/giphy.gif"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "https://media1.giphy.com/media/l0Hluv3yV9QRirYc0/giphy.gif"], ["created_at", "2018-09-14 20:02:55.877375"], ["updated_at", "2018-09-14 20:02:55.877375"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 7b8ef4e7-bcee-4283-8aac-6b57415f6f96) to Async(default) with arguments: #<GlobalID:0x007faaaa1d2548 @uri=#<URI::GID gid://action-cable-uploader/Message/24>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 24], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [7b8ef4e7-bcee-4283-8aac-6b57415f6f96] Performing MessageBroadcastJob (Job ID: 7b8ef4e7-bcee-4283-8aac-6b57415f6f96) from Async(default) with arguments: #<GlobalID:0x007faaaa1da630 @uri=#<URI::GID gid://action-cable-uploader/Message/24>>
+[ActiveJob] [MessageBroadcastJob] [7b8ef4e7-bcee-4283-8aac-6b57415f6f96]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [7b8ef4e7-bcee-4283-8aac-6b57415f6f96]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [7b8ef4e7-bcee-4283-8aac-6b57415f6f96] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/l0Hluv3yV9QRirYc0/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:02</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [7b8ef4e7-bcee-4283-8aac-6b57415f6f96] Performed MessageBroadcastJob (Job ID: 7b8ef4e7-bcee-4283-8aac-6b57415f6f96) from Async(default) in 27.24ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/l0Hluv3yV9QRirYc0/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:02</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/l0Hluv3yV9QRirYc0/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:02</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"HI"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "HI"], ["created_at", "2018-09-14 20:03:29.636963"], ["updated_at", "2018-09-14 20:03:29.636963"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 442ad360-3fb9-4a4e-9d40-1bd4058ffa2d) to Async(default) with arguments: #<GlobalID:0x007faaa98ca0e0 @uri=#<URI::GID gid://action-cable-uploader/Message/25>>
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [442ad360-3fb9-4a4e-9d40-1bd4058ffa2d] Performing MessageBroadcastJob (Job ID: 442ad360-3fb9-4a4e-9d40-1bd4058ffa2d) from Async(default) with arguments: #<GlobalID:0x007faaa8ca5be8 @uri=#<URI::GID gid://action-cable-uploader/Message/25>>
+[ActiveJob] [MessageBroadcastJob] [442ad360-3fb9-4a4e-9d40-1bd4058ffa2d]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [442ad360-3fb9-4a4e-9d40-1bd4058ffa2d]   Rendered messages/_message.html.erb (2.0ms)
+[ActiveJob] [MessageBroadcastJob] [442ad360-3fb9-4a4e-9d40-1bd4058ffa2d] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  HI\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [442ad360-3fb9-4a4e-9d40-1bd4058ffa2d] Performed MessageBroadcastJob (Job ID: 442ad360-3fb9-4a4e-9d40-1bd4058ffa2d) from Async(default) in 25.34ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  HI\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  HI\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"HIIIIIII"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "HIIIIIII"], ["created_at", "2018-09-14 20:03:39.272578"], ["updated_at", "2018-09-14 20:03:39.272578"]]
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 27f85e82-0f22-4efd-ba22-8545db66371e) to Async(default) with arguments: #<GlobalID:0x007faaa0647768 @uri=#<URI::GID gid://action-cable-uploader/Message/26>>
+[ActiveJob] [MessageBroadcastJob] [27f85e82-0f22-4efd-ba22-8545db66371e] Performing MessageBroadcastJob (Job ID: 27f85e82-0f22-4efd-ba22-8545db66371e) from Async(default) with arguments: #<GlobalID:0x007faaa8cd40b0 @uri=#<URI::GID gid://action-cable-uploader/Message/26>>
+[ActiveJob] [MessageBroadcastJob] [27f85e82-0f22-4efd-ba22-8545db66371e]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [27f85e82-0f22-4efd-ba22-8545db66371e]   Rendered messages/_message.html.erb (2.1ms)
+[ActiveJob] [MessageBroadcastJob] [27f85e82-0f22-4efd-ba22-8545db66371e] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HIIIIIII\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [27f85e82-0f22-4efd-ba22-8545db66371e] Performed MessageBroadcastJob (Job ID: 27f85e82-0f22-4efd-ba22-8545db66371e) from Async(default) in 29.17ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HIIIIIII\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  HIIIIIII\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"lol"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "lol"], ["created_at", "2018-09-14 20:03:42.364565"], ["updated_at", "2018-09-14 20:03:42.364565"]]
+  [1m[35m (3.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 27], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: b918485d-e744-483f-b5a0-f10e8d968a89) to Async(default) with arguments: #<GlobalID:0x007faaa8cece30 @uri=#<URI::GID gid://action-cable-uploader/Message/27>>
+[ActiveJob] [MessageBroadcastJob] [b918485d-e744-483f-b5a0-f10e8d968a89] Performing MessageBroadcastJob (Job ID: b918485d-e744-483f-b5a0-f10e8d968a89) from Async(default) with arguments: #<GlobalID:0x007faaaa250ad8 @uri=#<URI::GID gid://action-cable-uploader/Message/27>>
+[ActiveJob] [MessageBroadcastJob] [b918485d-e744-483f-b5a0-f10e8d968a89]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [b918485d-e744-483f-b5a0-f10e8d968a89]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [b918485d-e744-483f-b5a0-f10e8d968a89] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  lol\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [b918485d-e744-483f-b5a0-f10e8d968a89] Performed MessageBroadcastJob (Job ID: b918485d-e744-483f-b5a0-f10e8d968a89) from Async(default) in 28.01ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  lol\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  lol\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"lmao"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "lmao"], ["created_at", "2018-09-14 20:03:50.162037"], ["updated_at", "2018-09-14 20:03:50.162037"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0) to Async(default) with arguments: #<GlobalID:0x007faaaa883478 @uri=#<URI::GID gid://action-cable-uploader/Message/28>>
+[ActiveJob] [MessageBroadcastJob] [f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0] Performing MessageBroadcastJob (Job ID: f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0) from Async(default) with arguments: #<GlobalID:0x007faaaa26b338 @uri=#<URI::GID gid://action-cable-uploader/Message/28>>
+[ActiveJob] [MessageBroadcastJob] [f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0]   Rendered messages/_message.html.erb (1.8ms)
+[ActiveJob] [MessageBroadcastJob] [f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  lmao\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0] Performed MessageBroadcastJob (Job ID: f63bdc32-dfa8-4c8a-a3b5-9eae688f12a0) from Async(default) in 24.62ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  lmao\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  lmao\n  <br>\n  <small>at 14 Sep 20:03</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"https://media1.giphy.com/media/l41JMXnXn4E7WQR8s/giphy.gif"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "https://media1.giphy.com/media/l41JMXnXn4E7WQR8s/giphy.gif"], ["created_at", "2018-09-14 20:04:13.848263"], ["updated_at", "2018-09-14 20:04:13.848263"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 585e6ff0-130c-43a7-bb1c-d69f27753bc0) to Async(default) with arguments: #<GlobalID:0x007faaaa28b5c0 @uri=#<URI::GID gid://action-cable-uploader/Message/29>>
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 29], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [585e6ff0-130c-43a7-bb1c-d69f27753bc0] Performing MessageBroadcastJob (Job ID: 585e6ff0-130c-43a7-bb1c-d69f27753bc0) from Async(default) with arguments: #<GlobalID:0x007faaa8d563f8 @uri=#<URI::GID gid://action-cable-uploader/Message/29>>
+[ActiveJob] [MessageBroadcastJob] [585e6ff0-130c-43a7-bb1c-d69f27753bc0]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [585e6ff0-130c-43a7-bb1c-d69f27753bc0]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [585e6ff0-130c-43a7-bb1c-d69f27753bc0] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/l41JMXnXn4E7WQR8s/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:04</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [585e6ff0-130c-43a7-bb1c-d69f27753bc0] Performed MessageBroadcastJob (Job ID: 585e6ff0-130c-43a7-bb1c-d69f27753bc0) from Async(default) in 28.14ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/l41JMXnXn4E7WQR8s/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:04</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/l41JMXnXn4E7WQR8s/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:04</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"lol"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "lol"], ["created_at", "2018-09-14 20:04:54.139513"], ["updated_at", "2018-09-14 20:04:54.139513"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: ed55e2df-2a60-4436-ba25-134216dce40a) to Async(default) with arguments: #<GlobalID:0x007faaa8d9f850 @uri=#<URI::GID gid://action-cable-uploader/Message/30>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 30], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [ed55e2df-2a60-4436-ba25-134216dce40a] Performing MessageBroadcastJob (Job ID: ed55e2df-2a60-4436-ba25-134216dce40a) from Async(default) with arguments: #<GlobalID:0x007faaaa2c2520 @uri=#<URI::GID gid://action-cable-uploader/Message/30>>
+[ActiveJob] [MessageBroadcastJob] [ed55e2df-2a60-4436-ba25-134216dce40a]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [ed55e2df-2a60-4436-ba25-134216dce40a]   Rendered messages/_message.html.erb (2.6ms)
+[ActiveJob] [MessageBroadcastJob] [ed55e2df-2a60-4436-ba25-134216dce40a] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  lol\n  <br>\n  <small>at 14 Sep 20:04</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [ed55e2df-2a60-4436-ba25-134216dce40a] Performed MessageBroadcastJob (Job ID: ed55e2df-2a60-4436-ba25-134216dce40a) from Async(default) in 27.81ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  lol\n  <br>\n  <small>at 14 Sep 20:04</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  lol\n  <br>\n  <small>at 14 Sep 20:04</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"Hello"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "Hello"], ["created_at", "2018-09-14 20:05:02.203020"], ["updated_at", "2018-09-14 20:05:02.203020"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 550b75c9-b18a-4e93-803d-16f60012301a) to Async(default) with arguments: #<GlobalID:0x007faaa05357a8 @uri=#<URI::GID gid://action-cable-uploader/Message/31>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 31], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [550b75c9-b18a-4e93-803d-16f60012301a] Performing MessageBroadcastJob (Job ID: 550b75c9-b18a-4e93-803d-16f60012301a) from Async(default) with arguments: #<GlobalID:0x007faaaa2e30e0 @uri=#<URI::GID gid://action-cable-uploader/Message/31>>
+[ActiveJob] [MessageBroadcastJob] [550b75c9-b18a-4e93-803d-16f60012301a]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [550b75c9-b18a-4e93-803d-16f60012301a]   Rendered messages/_message.html.erb (2.0ms)
+[ActiveJob] [MessageBroadcastJob] [550b75c9-b18a-4e93-803d-16f60012301a] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [550b75c9-b18a-4e93-803d-16f60012301a] Performed MessageBroadcastJob (Job ID: 550b75c9-b18a-4e93-803d-16f60012301a) from Async(default) in 25.78ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  Hello\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"https://media2.giphy.com/media/LQjqYNrXB0fDy/giphy.gif"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "https://media2.giphy.com/media/LQjqYNrXB0fDy/giphy.gif"], ["created_at", "2018-09-14 20:05:35.458761"], ["updated_at", "2018-09-14 20:05:35.458761"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 789748e7-48f9-4026-a797-74a288370eaa) to Async(default) with arguments: #<GlobalID:0x007faaa8dec0b0 @uri=#<URI::GID gid://action-cable-uploader/Message/32>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 32], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [789748e7-48f9-4026-a797-74a288370eaa] Performing MessageBroadcastJob (Job ID: 789748e7-48f9-4026-a797-74a288370eaa) from Async(default) with arguments: #<GlobalID:0x007faaaa3335e0 @uri=#<URI::GID gid://action-cable-uploader/Message/32>>
+[ActiveJob] [MessageBroadcastJob] [789748e7-48f9-4026-a797-74a288370eaa]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [789748e7-48f9-4026-a797-74a288370eaa]   Rendered messages/_message.html.erb (1.9ms)
+[ActiveJob] [MessageBroadcastJob] [789748e7-48f9-4026-a797-74a288370eaa] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media2.giphy.com/media/LQjqYNrXB0fDy/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [789748e7-48f9-4026-a797-74a288370eaa] Performed MessageBroadcastJob (Job ID: 789748e7-48f9-4026-a797-74a288370eaa) from Async(default) in 25.32ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media2.giphy.com/media/LQjqYNrXB0fDy/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media2.giphy.com/media/LQjqYNrXB0fDy/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"hihih"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "hihih"], ["created_at", "2018-09-14 20:05:44.252502"], ["updated_at", "2018-09-14 20:05:44.252502"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 8e00959c-10fd-4c6d-a5ad-6453d49fd8fd) to Async(default) with arguments: #<GlobalID:0x007faaaa34a920 @uri=#<URI::GID gid://action-cable-uploader/Message/33>>
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 33], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [8e00959c-10fd-4c6d-a5ad-6453d49fd8fd] Performing MessageBroadcastJob (Job ID: 8e00959c-10fd-4c6d-a5ad-6453d49fd8fd) from Async(default) with arguments: #<GlobalID:0x007faaa8e2d3f8 @uri=#<URI::GID gid://action-cable-uploader/Message/33>>
+[ActiveJob] [MessageBroadcastJob] [8e00959c-10fd-4c6d-a5ad-6453d49fd8fd]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [8e00959c-10fd-4c6d-a5ad-6453d49fd8fd]   Rendered messages/_message.html.erb (2.1ms)
+[ActiveJob] [MessageBroadcastJob] [8e00959c-10fd-4c6d-a5ad-6453d49fd8fd] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  hihih\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [8e00959c-10fd-4c6d-a5ad-6453d49fd8fd] Performed MessageBroadcastJob (Job ID: 8e00959c-10fd-4c6d-a5ad-6453d49fd8fd) from Async(default) in 24.94ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  hihih\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  hihih\n  <br>\n  <small>at 14 Sep 20:05</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+Started GET "/" for 127.0.0.1 at 2018-09-14 16:05:56 -0400
+Processing by ChatsController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "bc7114b3cfa61c590b6c58c6f89e6732d0286b51"], ["LIMIT", 1]]
+  Rendering chats/index.html.erb within layouts/application
+  [1m[36mMessage Load (0.4ms)[0m  [1m[34mSELECT "messages".* FROM "messages" ORDER BY "messages"."created_at" ASC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered collection of messages/_message.html.erb [33 times] (41.0ms)
+  Rendered chats/index.html.erb within layouts/application (45.1ms)
+Completed 200 OK in 138ms (Views: 130.0ms | ActiveRecord: 1.7ms)
+
+
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 16:05:56 -0400
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for 127.0.0.1 at 2018-09-14 16:05:56 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 16:05:56 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT ?[0m  [["remember_token", "bc7114b3cfa61c590b6c58c6f89e6732d0286b51"], ["LIMIT", 1]]
+Registered connection (Z2lkOi8vYWN0aW9uLWNhYmxlLXVwbG9hZGVyL1VzZXIvMQ)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Started DELETE "/sign_out" for 127.0.0.1 at 2018-09-14 16:05:57 -0400
+Processing by Clearance::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "bc7114b3cfa61c590b6c58c6f89e6732d0286b51"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "users" SET "remember_token" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["remember_token", "d6057ceddd7b8653456e8e798bac1aa16c794908"], ["updated_at", "2018-09-14 20:05:57.831938"], ["id", 1]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/sign_in
+Completed 302 Found in 7ms (ActiveRecord: 2.7ms)
+
+
+Started GET "/sign_in" for 127.0.0.1 at 2018-09-14 16:05:57 -0400
+Processing by Clearance::SessionsController#new as HTML
+  Rendering /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/_form.html.erb (2.8ms)
+  Rendered /Users/kyleneale/.rvm/gems/ruby-2.3.3/gems/clearance-1.16.1/app/views/sessions/new.html.erb within layouts/application (9.0ms)
+Completed 200 OK in 64ms (Views: 63.1ms | ActiveRecord: 0.0ms)
+
+
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 16:05:57 -0400
+ChatChannel stopped streaming from chat_channel
+Started POST "/session" for 127.0.0.1 at 2018-09-14 16:06:11 -0400
+Processing by Clearance::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "session"=>{"email"=>"kyle@gmail.com", "password"=>"[FILTERED]"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "kyle@gmail.com"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 302 Found in 71ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-09-14 16:06:11 -0400
+Processing by ChatsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["remember_token", "d6057ceddd7b8653456e8e798bac1aa16c794908"], ["LIMIT", 1]]
+  Rendering chats/index.html.erb within layouts/application
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT "messages".* FROM "messages" ORDER BY "messages"."created_at" ASC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered collection of messages/_message.html.erb [33 times] (37.8ms)
+  Rendered chats/index.html.erb within layouts/application (41.8ms)
+Completed 200 OK in 83ms (Views: 78.4ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2018-09-14 16:06:12 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 16:06:12 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT ?[0m  [["remember_token", "d6057ceddd7b8653456e8e798bac1aa16c794908"], ["LIMIT", 1]]
+Registered connection (Z2lkOi8vYWN0aW9uLWNhYmxlLXVwbG9hZGVyL1VzZXIvMQ)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#send_message({"message"=>"https://media1.giphy.com/media/9lJY94PtuDDj2/giphy.gif"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "https://media1.giphy.com/media/9lJY94PtuDDj2/giphy.gif"], ["created_at", "2018-09-14 20:08:57.928059"], ["updated_at", "2018-09-14 20:08:57.928059"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 2121f9ff-6194-46a5-b0e1-4de7d85eacd9) to Async(default) with arguments: #<GlobalID:0x007faaa8560360 @uri=#<URI::GID gid://action-cable-uploader/Message/34>>
+  [1m[36mMessage Load (0.3ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 34], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [2121f9ff-6194-46a5-b0e1-4de7d85eacd9] Performing MessageBroadcastJob (Job ID: 2121f9ff-6194-46a5-b0e1-4de7d85eacd9) from Async(default) with arguments: #<GlobalID:0x007faaa8506518 @uri=#<URI::GID gid://action-cable-uploader/Message/34>>
+[ActiveJob] [MessageBroadcastJob] [2121f9ff-6194-46a5-b0e1-4de7d85eacd9]   [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [2121f9ff-6194-46a5-b0e1-4de7d85eacd9]   Rendered messages/_message.html.erb (5.4ms)
+[ActiveJob] [MessageBroadcastJob] [2121f9ff-6194-46a5-b0e1-4de7d85eacd9] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/9lJY94PtuDDj2/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:08</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [2121f9ff-6194-46a5-b0e1-4de7d85eacd9] Performed MessageBroadcastJob (Job ID: 2121f9ff-6194-46a5-b0e1-4de7d85eacd9) from Async(default) in 29.64ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/9lJY94PtuDDj2/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:08</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n    <img src=\"https://media1.giphy.com/media/9lJY94PtuDDj2/giphy.gif\">\n  <br>\n  <small>at 14 Sep 20:08</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"supsupsups"})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "supsupsups"], ["created_at", "2018-09-14 20:09:04.188804"], ["updated_at", "2018-09-14 20:09:04.188804"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: d18faa63-e458-422b-8a6e-f886bd4466eb) to Async(default) with arguments: #<GlobalID:0x007faaa88ca938 @uri=#<URI::GID gid://action-cable-uploader/Message/35>>
+[ActiveJob] [MessageBroadcastJob] [d18faa63-e458-422b-8a6e-f886bd4466eb] Performing MessageBroadcastJob (Job ID: d18faa63-e458-422b-8a6e-f886bd4466eb) from Async(default) with arguments: #<GlobalID:0x007faaa8475720 @uri=#<URI::GID gid://action-cable-uploader/Message/35>>
+[ActiveJob] [MessageBroadcastJob] [d18faa63-e458-422b-8a6e-f886bd4466eb]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [d18faa63-e458-422b-8a6e-f886bd4466eb]   Rendered messages/_message.html.erb (2.3ms)
+[ActiveJob] [MessageBroadcastJob] [d18faa63-e458-422b-8a6e-f886bd4466eb] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  supsupsups\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [d18faa63-e458-422b-8a6e-f886bd4466eb] Performed MessageBroadcastJob (Job ID: d18faa63-e458-422b-8a6e-f886bd4466eb) from Async(default) in 26.97ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  supsupsups\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  supsupsups\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"u up?"})
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["body", "u up?"], ["created_at", "2018-09-14 20:09:14.746974"], ["updated_at", "2018-09-14 20:09:14.746974"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 92acea06-1ea2-467f-ab1f-5a114b0c6e58) to Async(default) with arguments: #<GlobalID:0x007faaa83b60c8 @uri=#<URI::GID gid://action-cable-uploader/Message/36>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 36], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [92acea06-1ea2-467f-ab1f-5a114b0c6e58] Performing MessageBroadcastJob (Job ID: 92acea06-1ea2-467f-ab1f-5a114b0c6e58) from Async(default) with arguments: #<GlobalID:0x007faaa83844b0 @uri=#<URI::GID gid://action-cable-uploader/Message/36>>
+[ActiveJob] [MessageBroadcastJob] [92acea06-1ea2-467f-ab1f-5a114b0c6e58]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [92acea06-1ea2-467f-ab1f-5a114b0c6e58]   Rendered messages/_message.html.erb (2.3ms)
+[ActiveJob] [MessageBroadcastJob] [92acea06-1ea2-467f-ab1f-5a114b0c6e58] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  u up?\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [92acea06-1ea2-467f-ab1f-5a114b0c6e58] Performed MessageBroadcastJob (Job ID: 92acea06-1ea2-467f-ab1f-5a114b0c6e58) from Async(default) in 25.7ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  u up?\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>kyle@gmail.com</strong> says:\n  u up?\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel#send_message({"message"=>"yea ;)"})
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "messages" ("user_id", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 3], ["body", "yea ;)"], ["created_at", "2018-09-14 20:09:32.477263"], ["updated_at", "2018-09-14 20:09:32.477263"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued MessageBroadcastJob (Job ID: 4f435786-2d0a-4dc5-9695-865f01020af6) to Async(default) with arguments: #<GlobalID:0x007faaa8898aa0 @uri=#<URI::GID gid://action-cable-uploader/Message/37>>
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT  "messages".* FROM "messages" WHERE "messages"."id" = ? LIMIT ?[0m  [["id", 37], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [4f435786-2d0a-4dc5-9695-865f01020af6] Performing MessageBroadcastJob (Job ID: 4f435786-2d0a-4dc5-9695-865f01020af6) from Async(default) with arguments: #<GlobalID:0x007faaa0e86a50 @uri=#<URI::GID gid://action-cable-uploader/Message/37>>
+[ActiveJob] [MessageBroadcastJob] [4f435786-2d0a-4dc5-9695-865f01020af6]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [MessageBroadcastJob] [4f435786-2d0a-4dc5-9695-865f01020af6]   Rendered messages/_message.html.erb (2.2ms)
+[ActiveJob] [MessageBroadcastJob] [4f435786-2d0a-4dc5-9695-865f01020af6] [ActionCable] Broadcasting to chat_channel: {:message=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  yea ;)\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"}
+[ActiveJob] [MessageBroadcastJob] [4f435786-2d0a-4dc5-9695-865f01020af6] Performed MessageBroadcastJob (Job ID: 4f435786-2d0a-4dc5-9695-865f01020af6) from Async(default) in 26.47ms
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  yea ;)\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+ChatChannel transmitting {"message"=>"<div class=\"message\">\n  <strong>hanzo@gmail.com</strong> says:\n  yea ;)\n  <br>\n  <small>at 14 Sep 20:09</small>\n  <hr>\n</div>\n"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 16:15:52 -0400
+ChatChannel stopped streaming from chat_channel
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-14 16:15:56 -0400
+ChatChannel stopped streaming from chat_channel

@@ -1,16 +1,19 @@
 # Feelings Chat - An application utilizing Action Cable to be used for chatting about feelings.
 
 ## Application Features
-- Users can filter through students by modules.
+- Users can signup and login.
 
-- Users can send requests to/receive requests from other students.
+- Users can send and receive messages from other users.
 
-- Users can guess who sent the friend request. If wrong, the user will have to guess again.
+- User can search and add different GIF's to chat.
 
-- Users can view their correct matches and pending friend requests.
+- User can view preview messages.
 
 ## Built With
 - Ruby on Rails
+- Ruby Action Cable
+- Vanilla JS
+- GIPHY API
 - Sqlite3 Database using ActiveRecord
 
 
